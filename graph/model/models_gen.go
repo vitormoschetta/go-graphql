@@ -2,27 +2,12 @@
 
 package model
 
-type Category struct {
-	ID          string     `json:"id"`
-	Name        string     `json:"name"`
-	Description *string    `json:"description,omitempty"`
-	Products    []*Product `json:"products,omitempty"`
-}
-
 type CategoryInput struct {
 	Name        string  `json:"name"`
 	Description *string `json:"description,omitempty"`
 }
 
 type Mutation struct {
-}
-
-type Product struct {
-	ID          string    `json:"id"`
-	Name        string    `json:"name"`
-	Description *string   `json:"description,omitempty"`
-	Price       float64   `json:"price"`
-	Category    *Category `json:"category"`
 }
 
 type ProductInput struct {
