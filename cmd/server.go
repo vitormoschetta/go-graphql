@@ -10,6 +10,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/playground"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/vitormoschetta/go-graphql/graph"
+	"github.com/vitormoschetta/go-graphql/graph/generated"
 	"github.com/vitormoschetta/go-graphql/internal/database"
 )
 
@@ -23,10 +24,13 @@ func main() {
 	defer db.Close()
 
 	categoryDb := database.NewCategory(db)
-
-	executableSchema := graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{
+	productDb := database.NewProduct(db)
+	resolver := graph.Resolver{
 		CategoryDB: categoryDb,
-	}})
+		ProductDB:  productDb,
+	}
+
+	executableSchema := generated.NewExecutableSchema(generated.Config{Resolvers: &resolver})
 
 	srv := handler.NewDefaultServer(executableSchema)
 

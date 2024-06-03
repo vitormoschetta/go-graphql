@@ -1,0 +1,23 @@
+# Definição dos tipos de dados e operações suportadas pela API
+type Category {
+  id: ID!
+  name: String!
+  description: String
+  products: [Product]
+}
+
+# Tipos de entrada para criação de novos registros
+input CategoryInput {
+  name: String!
+  description: String
+}
+
+# Operações de consulta
+extend type Query {
+  categories: [Category]
+}
+
+# Operações de mutação (criação, atualização e exclusão)
+extend type Mutation {
+  createCategory(input: CategoryInput!): Category
+}

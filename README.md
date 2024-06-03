@@ -34,4 +34,14 @@ sqlite3 database.db
 
 ```sql
 create table categories (id string, name string, description string);
+create table products (id string, name string, description string, price float, category_id string);
 ```
+
+## Adicionar chamadas encadeadas
+1. Separar os modelos em arquivos diferentes
+2. Remover os relacionamentos dos modelos: `Category` e `Product` ficam sem referência um ao outro
+3. Alterar o arquivo `gqlgen.yml` para adicionar os modelos separados
+4. Executar o comando `go run github.com/99designs/gqlgen generate` para gerar as novas queries
+5. Implementar as funções de resolver para as chamadas encadeadas
+
+

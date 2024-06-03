@@ -1,0 +1,39 @@
+query GetCategories {
+  categories {
+    id
+    name
+    description
+  }
+}
+
+query GetGategoriesWithProducts {
+  categories {
+    id
+    name
+    description
+    products {
+      name
+    }
+  }
+}
+
+query GetProducts {
+  products {
+    id
+    name
+    description
+    price
+  }
+}
+
+query GetProductsWithCategories {
+  products {
+    id
+    name
+    description
+    price
+    category {
+      name
+    }
+  }
+}
