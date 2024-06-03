@@ -29,12 +29,37 @@ func (r *mutationResolver) CreateCategory(ctx context.Context, input model.Categ
 
 // CreateProduct is the resolver for the createProduct field.
 func (r *mutationResolver) CreateProduct(ctx context.Context, input model.ProductInput) (*model.Product, error) {
-	panic(fmt.Errorf("not implemented: CreateProduct - createProduct"))
+	ID := uuid.New().String()
+	product, err := r.ProductDB.Create(ID, input.Name, *input.Description, input.CategoryID, input.Price)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.Product{
+		ID:          product.ID,
+		Name:        product.Name,
+		Description: &product.Description,
+		Price:       product.Price,
+	}, nil
 }
 
 // Categories is the resolver for the categories field.
 func (r *queryResolver) Categories(ctx context.Context) ([]*model.Category, error) {
-	panic(fmt.Errorf("not implemented: Categories - categories"))
+	categories, err := r.CategoryDB.GetAll()
+	if err != nil {
+		return nil, err
+	}
+
+	var result []*model.Category
+	for _, category := range categories {
+		result = append(result, &model.Category{
+			ID:          category.ID,
+			Name:        category.Name,
+			Description: &category.Description,
+		})
+	}
+
+	return result, nil
 }
 
 // Category is the resolver for the category field.
@@ -44,7 +69,22 @@ func (r *queryResolver) Category(ctx context.Context, id string) (*model.Categor
 
 // Products is the resolver for the products field.
 func (r *queryResolver) Products(ctx context.Context) ([]*model.Product, error) {
-	panic(fmt.Errorf("not implemented: Products - products"))
+	products, err := r.ProductDB.GetAll()
+	if err != nil {
+		return nil, err
+	}
+
+	var result []*model.Product
+	for _, product := range products {
+		result = append(result, &model.Product{
+			ID:          product.ID,
+			Name:        product.Name,
+			Description: &product.Description,
+			Price:       product.Price,
+		})
+	}
+
+	return result, nil
 }
 
 // Product is the resolver for the product field.

@@ -1,0 +1,23 @@
+mutation CreateCategory {
+  createCategory(input: { name: "Auto2", description: "Peças de Automóveis" }) {
+    id
+    name
+    description
+  }
+}
+
+mutation CreateProduct {
+  createProduct(
+    input: {
+      name: "Rack de teto"
+      description: "Rack de teto para bagageiro"
+      price: 290
+      categoryId: "d54cba2c-d058-4ae6-ae05-bf1028d1aa32"
+    }
+  ) {
+    id
+    name
+    description
+    price
+  }
+}

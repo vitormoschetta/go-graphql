@@ -23,9 +23,11 @@ func main() {
 	defer db.Close()
 
 	categoryDb := database.NewCategory(db)
+	productDb := database.NewProduct(db)
 
 	executableSchema := graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{
 		CategoryDB: categoryDb,
+		ProductDB:  productDb,
 	}})
 
 	srv := handler.NewDefaultServer(executableSchema)

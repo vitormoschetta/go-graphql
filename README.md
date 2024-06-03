@@ -34,4 +34,5 @@ sqlite3 database.db
 
 ```sql
 create table categories (id string, name string, description string);
+create table products (id string, name string, description string, price float, category_id string);
 ```

@@ -1,0 +1,16 @@
+query GetCategories {
+  categories {
+    id
+    name
+    description
+  }
+}
+
+query GetProducts {
+  products {
+    id
+    name
+    description
+    price
+  }
+}
