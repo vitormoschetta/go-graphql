@@ -30,30 +30,28 @@ func (c *Category) Create(id, name, description string) (Category, error) {
 	return category, nil
 }
 
-func (c *Category) GetAll() ([]*Category, error) {
+func (c *Category) GetAll() ([]Category, error) {
 	rows, err := c.db.Query("SELECT id, name, description FROM categories")
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	categories := make([]*Category, 0)
+	categories := make([]Category, 0)
+
 	for rows.Next() {
-		category := &Category{}
-		err := rows.Scan(&category.ID, &category.Name, &category.Description)
+		var id, name, description string
+		err := rows.Scan(&id, &name, &description)
 		if err != nil {
 			return nil, err
 		}
+		category := Category{
+			ID:          id,
+			Name:        name,
+			Description: description,
+		}
 		categories = append(categories, category)
 	}
-	if err = rows.Err(); err != nil {
-		return nil, err
-	}
-	return categories, nil
-}
 
-func (c *Category) GetByID(id string) error {
-	row := c.db.QueryRow("SELECT id, name, description FROM categories WHERE id = $1", id)
-	err := row.Scan(&c.ID, &c.Name, &c.Description)
-	return err
+	return categories, nil
 }
